@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Girl I Like Forgot Her Glasses</title>
+
 <style>
   body {
     margin: 0;
@@ -48,37 +49,66 @@
     cursor: pointer;
   }
 
-  .episode-list li a:hover {
-    text-decoration: underline;
-  }
-
   .episode-list li.active a {
     color: #ff69b4;
   }
 
-  /* Main video area */
+  /* Main */
   .main {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .episode-title {
+    width: 100%;
+    max-width: 900px;
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+
+  .episode-desc {
+    width: 100%;
+    max-width: 900px;
+    color: #ccc;
+    margin-bottom: 15px;
   }
 
   .video-container {
     width: 100%;
     max-width: 900px;
-    background-color: black;
+    background: black;
     border-radius: 10px;
     overflow: hidden;
   }
 
-  iframe, video {
+  iframe {
     width: 100%;
     height: 500px;
     border: none;
+  }
+
+  .controls {
+    margin-top: 15px;
+    width: 100%;
+    max-width: 900px;
+    text-align: right;
+  }
+
+  button {
+    background: #ff69b4;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    opacity: 0.85;
   }
 
   @media(max-width: 768px) {
@@ -88,63 +118,101 @@
     .sidebar {
       width: 100%;
       height: 200px;
-      overflow-x: auto;
       white-space: nowrap;
+      overflow-x: auto;
     }
-    .episode-list li {
-      display: inline-block;
-      margin-right: 15px;
-    }
-    .main {
-      padding: 10px;
-    }
-    .video-container iframe, .video-container video {
+    iframe {
       height: 300px;
     }
   }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-  <!-- Sidebar with episode list -->
+
+  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Episodes</h2>
-    <ul class="episode-list">
-      <li class="active"><a onclick="changeVideo('1VVMXWisg2zJypQp8D6tvvCX6a4t9bWIR', this)">Episode 1</a></li>
-      <li><a onclick="changeVideo('1-7kFmyxkCA47R2aPYs1F28ex_noPA_md', this)">Episode 2</a></li>
-      <li><a onclick="changeVideo('1YH5GxXvkH1Rxa7G6GpxkljdA9zRfCGsr', this)">Episode 3</a></li>
-      <li><a onclick="changeVideo('1zlzT3rQWFY3fekGTQdzMkecCrvuxateQ', this)">Episode 4</a></li>
-      <li><a onclick="changeVideo('1JnhLBu2Qye6vxxxayUtOd8U6t4_ZCJAY', this)">Episode 5</a></li>
-      <li><a onclick="changeVideo('1BOFxVpzbXyfL93RC8Nsohz5_AZ7MykQV', this)">Episode 6</a></li>
-      <li><a onclick="changeVideo('FILE_ID_7', this)">Episode 7</a></li>
-      <li><a onclick="changeVideo('FILE_ID_8', this)">Episode 8</a></li>
-      <li><a onclick="changeVideo('FILE_ID_9', this)">Episode 9</a></li>
-      <li><a onclick="changeVideo('FILE_ID_10', this)">Episode 10</a></li>
-      <li><a onclick="changeVideo('FILE_ID_11', this)">Episode 11</a></li>
-      <li><a onclick="changeVideo('FILE_ID_12', this)">Episode 12</a></li>
-      <li><a onclick="changeVideo('FILE_ID_13', this)">Episode 13</a></li>
-      <!-- Add more episodes -->
+    <ul class="episode-list" id="episodeList">
+      <li><a onclick="playEpisode(0)">Episode 1</a></li>
+      <li><a onclick="playEpisode(1)">Episode 2</a></li>
+      <li><a onclick="playEpisode(2)">Episode 3</a></li>
+      <li><a onclick="playEpisode(3)">Episode 4</a></li>
+      <li><a onclick="playEpisode(4)">Episode 5</a></li>
+      <li><a onclick="playEpisode(5)">Episode 6</a></li>
+      <li><a onclick="playEpisode(6)">Episode 7</a></li>
+      <li><a onclick="playEpisode(7)">Episode 8</a></li>
+      <li><a onclick="playEpisode(8)">Episode 9</a></li>
+      <li><a onclick="playEpisode(9)">Episode 10</a></li>
+      <li><a onclick="playEpisode(10)">Episode 11</a></li>
+      <li><a onclick="playEpisode(11)">Episode 12</a></li>
+      <li><a onclick="playEpisode(12)">Episode 13</a></li>
     </ul>
   </div>
 
-  <!-- Main video area -->
+  <!-- Main -->
   <div class="main">
+    <div class="episode-title" id="episodeTitle"></div>
+
+    <div class="episode-desc">
+      Yuki, a high school girl with poor eyesight, slowly grows closer to Itsuomi,
+      discovering her feelings through small, quiet moments.
+    </div>
+
     <div class="video-container">
-      <iframe id="player" src="https://drive.google.com/file/d/1VVMXWisg2zJypQp8D6tvvCX6a4t9bWIR/preview" allowfullscreen></iframe>
+      <iframe id="player" allowfullscreen></iframe>
+    </div>
+
+    <div class="controls">
+      <button onclick="nextEpisode()">Next Episode ▶</button>
     </div>
   </div>
+
 </div>
 
 <script>
-  function changeVideo(fileId, element) {
-    const iframe = document.getElementById('player');
-    iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
+  const episodes = [
+    "1VVMXWisg2zJypQp8D6tvvCX6a4t9bWIR",
+    "1-7kFmyxkCA47R2aPYs1F28ex_noPA_md",
+    "1YH5GxXvkH1Rxa7G6GpxkljdA9zRfCGsr",
+    "1zlzT3rQWFY3fekGTQdzMkecCrvuxateQ",
+    "1JnhLBu2Qye6vxxxayUtOd8U6t4_ZCJAY",
+    "1BOFxVpzbXyfL93RC8Nsohz5_AZ7MykQV",
+    "FILE_ID_7",
+    "FILE_ID_8",
+    "FILE_ID_9",
+    "FILE_ID_10",
+    "FILE_ID_11",
+    "FILE_ID_12",
+    "FILE_ID_13"
+  ];
 
-    // Highlight active episode
-    document.querySelectorAll('.episode-list li').forEach(li => li.classList.remove('active'));
-    element.parentElement.classList.add('active');
+  let currentEpisode = parseInt(localStorage.getItem("lastEpisode")) || 0;
+
+  function playEpisode(index) {
+    currentEpisode = index;
+    localStorage.setItem("lastEpisode", index);
+
+    document.getElementById("player").src =
+      `https://drive.google.com/file/d/${episodes[index]}/preview`;
+
+    document.getElementById("episodeTitle").textContent =
+      `Episode ${index + 1}`;
+
+    document.querySelectorAll(".episode-list li")
+      .forEach((li, i) => li.classList.toggle("active", i === index));
   }
+
+  function nextEpisode() {
+    if (currentEpisode < episodes.length - 1) {
+      playEpisode(currentEpisode + 1);
+    }
+  }
+
+  // Auto-resume last watched episode
+  playEpisode(currentEpisode);
 </script>
 
 </body>
