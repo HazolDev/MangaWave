@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manga Wave</title>
+  <title>MangaWave</title>
   <style>
     body {
       margin: 0;
@@ -16,7 +16,17 @@
       padding: 20px;
       background-color: #111;
       text-align: center;
-      font-size: 2em;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+
+    header p {
+      margin: 5px 0 0 0;
+      font-size: 1.1em;
+      color: #aaa;
     }
 
     .anime-container {
@@ -35,8 +45,8 @@
 
     .anime-card img {
       width: 100%;
-      height: 250px; /* uniform thumbnail height */
-      object-fit: cover; /* crop without stretching */
+      height: 250px;
+      object-fit: cover;
       display: block;
       border-radius: 10px;
     }
@@ -62,15 +72,23 @@
   </style>
 </head>
 <body>
+  <script>
+    // Show alert message when page loads
+    window.onload = function() {
+      alert("Some episodes may be down");
+    };
+  </script>
+
   <header>
-    <h1>Anime Stream</h1>
+    <h1>MangaWave</h1>
+    <p>A unblocked site for romance anime at school, not all romance anime are on here.</p>
   </header>
 
   <main class="anime-container">
     <div class="anime-card">
       <a href="anime/anime1.html">
         <img src="images/anime1.jpg" alt="Anime 1 Cover">
-        <p>The Girl I Like Forgot Her Glasses</p>
+        <p>Anime 1</p>
       </a>
     </div>
 
