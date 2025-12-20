@@ -24,9 +24,20 @@
     }
 
     header p {
-      margin: 5px 0 0 0;
+      margin: 5px 0 15px 0;
       font-size: 1.1em;
       color: #aaa;
+    }
+
+    #searchBar {
+      width: 60%;
+      max-width: 400px;
+      padding: 10px;
+      margin: 0 auto 20px auto;
+      display: block;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
     }
 
     .anime-container {
@@ -34,6 +45,8 @@
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 15px;
       padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
     .anime-card {
@@ -77,18 +90,32 @@
     window.onload = function() {
       alert("Some episodes may be down");
     };
+
+    function searchAnime() {
+      let input = document.getElementById('searchBar').value.toLowerCase();
+      let cards = document.getElementsByClassName('anime-card');
+      for (let i = 0; i < cards.length; i++) {
+        let title = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+        if (title.includes(input)) {
+          cards[i].style.display = '';
+        } else {
+          cards[i].style.display = 'none';
+        }
+      }
+    }
   </script>
 
   <header>
     <h1>MangaWave</h1>
     <p>A unblocked site for romance anime at school, not all romance anime are on here.</p>
+    <input type="text" id="searchBar" onkeyup="searchAnime()" placeholder="Search anime...">
   </header>
 
   <main class="anime-container">
     <div class="anime-card">
       <a href="anime/anime1.html">
         <img src="images/anime1.jpg" alt="Anime 1 Cover">
-        <p>Anime 1</p>
+        <p>The Girl I Like Forgot Her Glasses</p>
       </a>
     </div>
 
