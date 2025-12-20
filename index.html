@@ -18,12 +18,12 @@
     .video-container {
       margin-bottom: 40px;
     }
-    iframe {
+    video {
       width: 80%;
       max-width: 800px;
       height: 450px;
-      border: none;
       border-radius: 10px;
+      background-color: black;
     }
     ul {
       list-style-type: none;
@@ -36,6 +36,7 @@
       color: #1e90ff;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
     a:hover {
       text-decoration: underline;
@@ -45,24 +46,29 @@
 <body>
   <h1>My Anime Streaming Page</h1>
 
-  <!-- Embedded Video Player -->
+  <!-- Video Player -->
   <div class="video-container">
-    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+    <video controls>
+      <source src="https://drive.google.com/uc?export=download&id=FILE_ID_1" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 
   <!-- Episode List -->
   <h2>Episodes</h2>
   <ul>
-    <li><a href="#" onclick="changeVideo('https://www.youtube.com/embed/VIDEO_ID_1')">Episode 1</a></li>
-    <li><a href="#" onclick="changeVideo('https://www.youtube.com/embed/VIDEO_ID_2')">Episode 2</a></li>
-    <li><a href="#" onclick="changeVideo('https://www.youtube.com/embed/VIDEO_ID_3')">Episode 3</a></li>
+    <li><a onclick="changeVideo('FILE_ID_1')">Episode 1</a></li>
+    <li><a onclick="changeVideo('FILE_ID_2')">Episode 2</a></li>
+    <li><a onclick="changeVideo('FILE_ID_3')">Episode 3</a></li>
     <!-- Add more episodes here -->
   </ul>
 
   <script>
-    function changeVideo(url) {
-      const iframe = document.querySelector('.video-container iframe');
-      iframe.src = url;
+    function changeVideo(fileId) {
+      const video = document.querySelector('.video-container video');
+      video.src = `https://drive.google.com/uc?export=download&id=${1JnhLBu2Qye6vxxxayUtOd8U6t4_ZCJAY
+}`;
+      video.play();
     }
   </script>
 </body>
