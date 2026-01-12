@@ -4,174 +4,195 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MangaWave</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #141414;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
       color: white;
     }
 
     header {
-      padding: 20px;
-      background-color: #111;
+      padding: 30px 20px;
+      background: linear-gradient(to bottom, #111, #0d0d0d);
       text-align: center;
+      border-bottom: 1px solid #222;
     }
 
     header h1 {
-      font-size: 2.5em;
+      font-size: 3em;
       margin: 0;
+      letter-spacing: 1px;
     }
 
     header p {
-      margin: 5px 0 15px 0;
-      font-size: 1.1em;
+      margin: 10px 0 20px;
       color: #aaa;
+      font-size: 1.05em;
     }
 
     #searchBar {
       width: 60%;
-      max-width: 400px;
-      padding: 10px;
-      margin: 0 auto 20px auto;
-      display: block;
-      border-radius: 5px;
+      max-width: 420px;
+      padding: 12px;
+      border-radius: 25px;
       border: none;
+      outline: none;
       font-size: 1em;
+      background: #222;
+      color: white;
+      text-align: center;
     }
 
     .anime-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 15px;
-      padding: 20px;
-      max-height: 80vh;
-      overflow-y: auto;
+      gap: 20px;
+      padding: 25px;
     }
 
     .anime-card {
       position: relative;
+      height: 280px;
+      border-radius: 14px;
       overflow: hidden;
-      border-radius: 10px;
-      transition: transform 0.3s;
-      background-color: #222;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      height: 300px; /* uniform card height */
+      background: #000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .anime-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.6);
     }
 
     .anime-card img {
       width: 100%;
-      height: 70%; /* image takes up 70% of card */
-      object-fit: cover; /* crops images nicely */
-      border-radius: 10px 10px 0 0;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .anime-card:hover img {
+      transform: scale(1.08);
     }
 
     .anime-card p {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 12px;
       margin: 0;
-      padding: 10px 5px;
-      text-align: center;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0,0,0,0.7);
       font-size: 0.95em;
-    }
+      background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+      text-align: center;
 
-    .anime-card:hover {
-      transform: scale(1.03);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     a {
       text-decoration: none;
       color: inherit;
-      display: flex;
-      flex-direction: column;
+      display: block;
       height: 100%;
     }
   </style>
 </head>
+
 <body>
-  <script>
-    // Show alert message when page loads
-    window.onload = function() {
-      alert("Shows will be added/removed due to limited cloud storage, if you want to help us out donate to our cash app $HazolDev");
-    };
 
-    function searchAnime() {
-      let input = document.getElementById('searchBar').value.toLowerCase();
-      let cards = document.getElementsByClassName('anime-card');
-      for (let i = 0; i < cards.length; i++) {
-        let title = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
-        cards[i].style.display = title.includes(input) ? '' : 'none';
-      }
+<script>
+  window.onload = function () {
+    alert("Shows will be added/removed due to limited cloud storage. If you want to help us out, donate to our Cash App: $HazolDev");
+  };
+
+  function searchAnime() {
+    let input = document.getElementById('searchBar').value.toLowerCase();
+    let cards = document.getElementsByClassName('anime-card');
+
+    for (let i = 0; i < cards.length; i++) {
+      let title = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+      cards[i].style.display = title.includes(input) ? '' : 'none';
     }
-  </script>
+  }
+</script>
 
-  <header>
-    <h1>MangaWave</h1>
-    <p>A place for you to enjoy romance anime easily and for free!</p>
-    <input type="text" id="searchBar" onkeyup="searchAnime()" placeholder="Search anime...">
-  </header>
+<header>
+  <h1>MangaWave</h1>
+  <p>A place for you to enjoy romance anime easily and for free!</p>
+  <input
+    type="text"
+    id="searchBar"
+    onkeyup="searchAnime()"
+    placeholder="Search anime..."
+  >
+</header>
 
-  <main class="anime-container">
-    <div class="anime-card">
-      <a href="anime/anime1.html">
-        <img src="images/anime01.jpg" alt="Rascal Does Not Dream of Bunny Girl Senpai">
-        <p>Rascal Does Not Dream of Bunny Girl Senpai</p>
-      </a>
-    </div>
+<main class="anime-container">
 
-    <div class="anime-card">
-      <a href="anime/anime2.html">
-        <img src="images/anime2.jpg" alt="Shikimori's Not Just a Cutie">
-        <p>Shikimori's Not Just a Cutie</p>
-      </a>
-    </div>
+  <div class="anime-card">
+    <a href="anime/anime1.html">
+      <img src="images/anime01.jpg" alt="Rascal Does Not Dream of Bunny Girl Senpai" loading="lazy">
+      <p>Rascal Does Not Dream of Bunny Girl Senpai</p>
+    </a>
+  </div>
 
-    <div class="anime-card">
-      <a href="anime/anime3.html">
-        <img src="images/anime3.jpg" alt="Anime 3">
-        <p>Honey Lemon Soda</p>
-      </a>
-    </div>
+  <div class="anime-card">
+    <a href="anime/anime2.html">
+      <img src="images/anime2.jpg" alt="Shikimori's Not Just a Cutie" loading="lazy">
+      <p>Shikimori's Not Just a Cutie</p>
+    </a>
+  </div>
 
-    <div class="anime-card">
-      <a href="anime/anime4.html">
-        <img src="images/anime4.jpg" alt="Anime 4">
-        <p>Rascal Does Not Dream of a Dreaming Girl</p>
-      </a>
-    </div>
+  <div class="anime-card">
+    <a href="anime/anime3.html">
+      <img src="images/anime3.jpg" alt="Honey Lemon Soda" loading="lazy">
+      <p>Honey Lemon Soda</p>
+    </a>
+  </div>
 
-    <div class="anime-card">
-      <a href="anime/anime5.html">
-        <img src="images/anime5.jpg" alt="Anime 5">
-        <p>My Teen Romantic Comedy SNAFU S1</p>
-      </a>
-    </div>
+  <div class="anime-card">
+    <a href="anime/anime4.html">
+      <img src="images/anime4.jpg" alt="Rascal Does Not Dream of a Dreaming Girl" loading="lazy">
+      <p>Rascal Does Not Dream of a Dreaming Girl</p>
+    </a>
+  </div>
 
-    <div class="anime-card">
-      <a href="anime/anime6.html">
-        <img src="images/anime6.jpg" alt="Anime 6">
-        <p>Chillin' in Another World with level 2 Powers/p>
-      </a>
-    </div>
+  <div class="anime-card">
+    <a href="anime/anime5.html">
+      <img src="images/anime5.jpg" alt="My Teen Romantic Comedy SNAFU" loading="lazy">
+      <p>My Teen Romantic Comedy SNAFU S1</p>
+    </a>
+  </div>
 
-    <div class="anime-card">
-      <a href="anime/anime7.html">
-        <img src="images/anime7.jpg" alt="Anime 7">
-        <p>You And I Are Polar Opposites</p>
-      </a>
-    </div>
+  <div class="anime-card">
+    <a href="anime/anime6.html">
+      <img src="images/anime6.jpg" alt="Chillin in Another World with Level 2 Powers" loading="lazy">
+      <p>Chillin' in Another World with Level 2 Powers</p>
+    </a>
+  </div>
 
-    <div class="anime-card">
-      <a href="anime/anime0.html">
-        <img src="images/anime0.jpg" alt="Anime 8">
-        <p>Soon</p>
-      </a>
-    </div>
-  </main>
+  <div class="anime-card">
+    <a href="anime/anime7.html">
+      <img src="images/anime7.jpg" alt="You And I Are Polar Opposites" loading="lazy">
+      <p>You And I Are Polar Opposites</p>
+    </a>
+  </div>
+
+  <div class="anime-card">
+    <a href="anime/anime0.html">
+      <img src="images/anime0.jpg" alt="Coming Soon" loading="lazy">
+      <p>Coming Soon</p>
+    </a>
+  </div>
+
+</main>
+
 </body>
 </html>
