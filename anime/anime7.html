@@ -3,33 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>You And I Are Polar Opposites</title>
+<title>Watch Anime</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
   body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #121212;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
     color: #f0f0f0;
+  }
+
+  /* Top Bar */
+  .top-bar {
+    height: 60px;
+    background: linear-gradient(to right, #111, #0d0d0d);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-bottom: 1px solid #222;
+  }
+
+  .home-btn {
+    background: #ff69b4;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .home-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
 
   .container {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 60px);
   }
 
   /* Sidebar */
   .sidebar {
-    width: 300px;
-    background-color: #1e1e1e;
-    overflow-y: auto;
+    width: 280px;
+    background: #181818;
     padding: 20px;
-    box-sizing: border-box;
+    overflow-y: auto;
+    border-right: 1px solid #222;
   }
 
   .sidebar h2 {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #ff69b4;
   }
 
   .episode-list {
@@ -43,21 +72,31 @@
   }
 
   .episode-list li a {
-    color: #1e90ff;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #ccc;
     text-decoration: none;
-    font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .episode-list li a:hover {
+    background: #2a2a2a;
+    color: white;
   }
 
   .episode-list li.active a {
-    color: #ff69b4;
+    background: #ff69b4;
+    color: black;
+    font-weight: 600;
   }
 
   /* Main */
   .main {
     flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,63 +105,98 @@
   .episode-title {
     width: 100%;
     max-width: 900px;
-    font-size: 24px;
+    font-size: 1.6em;
     margin-bottom: 5px;
   }
 
   .episode-desc {
     width: 100%;
     max-width: 900px;
-    color: #ccc;
+    color: #aaa;
     margin-bottom: 15px;
   }
 
+  /* 🎥 FIXED VIDEO SIZING */
   .video-container {
+    position: relative;
     width: 100%;
     max-width: 900px;
+    aspect-ratio: 16 / 9;
     background: black;
-    border-radius: 10px;
+    border-radius: 14px;
     overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   }
 
-  iframe {
+  .video-container iframe {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 500px;
+    height: 100%;
     border: none;
   }
 
   .controls {
-    margin-top: 15px;
+    margin-top: 20px;
     width: 100%;
     max-width: 900px;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
   }
 
-  button {
+  .controls button {
     background: #ff69b4;
     border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
+    padding: 10px 18px;
+    border-radius: 20px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    transition: transform 0.2s, opacity 0.2s;
   }
 
-  button:hover {
-    opacity: 0.85;
+  .controls button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
 
-  @media(max-width: 768px) {
+  /* 📱 Mobile */
+  @media (max-width: 768px) {
     .container {
       flex-direction: column;
     }
+
     .sidebar {
       width: 100%;
-      height: 200px;
-      white-space: nowrap;
+      padding: 12px;
       overflow-x: auto;
+      overflow-y: hidden;
+      border-right: none;
+      border-bottom: 1px solid #222;
     }
-    iframe {
-      height: 300px;
+
+    .sidebar h2 {
+      display: none;
+    }
+
+    .episode-list {
+      display: flex;
+      gap: 10px;
+    }
+
+    .episode-list li {
+      margin-bottom: 0;
+    }
+
+    .main {
+      padding: 16px;
+    }
+
+    .episode-title {
+      font-size: 1.3em;
+    }
+
+    .controls {
+      justify-content: center;
     }
   }
 </style>
@@ -130,22 +204,23 @@
 
 <body>
 
+<div class="top-bar">
+  <a href="../index.html" class="home-btn">⬅ Home</a>
+</div>
+
 <div class="container">
 
-  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Episodes</h2>
-    <ul class="episode-list" id="episodeList">
-      <li><a onclick="playEpisode(0)">Episode 1</a></li>
+    <ul class="episode-list">
+      <li><a onclick="playEpisode(0)">Ep 1</a></li>
     </ul>
   </div>
 
-  <!-- Main -->
   <div class="main">
     <div class="episode-title" id="episodeTitle"></div>
+    <div class="episode-desc">🚀 Estimated the next episode will come at 1/18/2026, 3:00:00 AM</div>
 
-    <div class="episode-desc">
-     🚀 Estimated the next episode will come at 1/18/2026, 3:00:00 AM
     <div class="video-container">
       <iframe id="player" allowfullscreen></iframe>
     </div>
@@ -158,8 +233,10 @@
 </div>
 
 <script>
+  // ✅ EASY PASTE LINKS
   const episodes = [
-    "15c3PllXN4qWzOf6uuEwGTaWVzd7ZQLI5", //1
+    // You and I are polar opposites
+   "15c3PllXN4qWzOf6uuEwGTaWVzd7ZQLI5", //1
   ];
 
   let currentEpisode = parseInt(localStorage.getItem("lastEpisode")) || 0;
@@ -184,7 +261,6 @@
     }
   }
 
-  // Auto-resume last watched episode
   playEpisode(currentEpisode);
 </script>
 
