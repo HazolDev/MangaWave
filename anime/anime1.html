@@ -116,18 +116,23 @@
     margin-bottom: 15px;
   }
 
+  /* 🎥 FIXED VIDEO SIZING */
   .video-container {
+    position: relative;
     width: 100%;
     max-width: 900px;
+    aspect-ratio: 16 / 9;
     background: black;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   }
 
-  iframe {
+  .video-container iframe {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     border: none;
   }
 
@@ -154,7 +159,7 @@
     opacity: 0.9;
   }
 
-  /* 📱 Mobile tweaks (KEEP STYLE) */
+  /* 📱 Mobile */
   @media (max-width: 768px) {
     .container {
       flex-direction: column;
@@ -193,25 +198,18 @@
     .controls {
       justify-content: center;
     }
-
-    .home-btn {
-      padding: 8px 14px;
-      font-size: 0.9em;
-    }
   }
 </style>
 </head>
 
 <body>
 
-<!-- Top Bar -->
 <div class="top-bar">
   <a href="../index.html" class="home-btn">⬅ Home</a>
 </div>
 
 <div class="container">
 
-  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Episodes</h2>
     <ul class="episode-list">
@@ -230,7 +228,6 @@
     </ul>
   </div>
 
-  <!-- Main -->
   <div class="main">
     <div class="episode-title" id="episodeTitle"></div>
     <div class="episode-desc">template</div>
@@ -247,7 +244,23 @@
 </div>
 
 <script>
-  const episodes = ["1rkJwmF5Fm7hbQ2bRgtXmkI0oC6l9mKjw","1q-Ft7j0GTZu-AsJLxqRjmKxH6T7JVaJ0","1IFxiZ7L4Uim2ozUpPo8Q3eT-LEgA1sal","1eOU9604dZdFamsT90u71iOctNcHVWMTJ","10Pe_jv2w-LgML4di60qbyB5dtu6kZMQe","1UdCq04spTbWUSknwjH4W_ttemy7Bsyie","1kLKeLbsziGUThDr8L_dwFhxb_l9HZadA","1-MGTy3m-yx_DJL4xdO3s1wgqJ6TKwP0P","1FFY0zoykO5XW7qvIDbGskRuoEWrCQpdg","1DBMnHfSGg3YZ3wcfvfcsEwqZzvtgt8EB","1OlxWKVySjUNrav4ndfegolqjIpkBC2Pj","1J71uwbUda3Ze73mLlYh9bqtsSKcxUcAx", "1YaNwdUIBKYuJ04ms3-gaeGr_xj-x7MLy"];
+  // ✅ EASY PASTE LINKS
+  const episodes = [
+  "1rkJwmF5Fm7hbQ2bRgtXmkI0oC6l9mKjw",
+    "1q-Ft7j0GTZu-AsJLxqRjmKxH6T7JVaJ0",
+    "1IFxiZ7L4Uim2ozUpPo8Q3eT-LEgA1sal",
+    "1eOU9604dZdFamsT90u71iOctNcHVWMTJ",
+    "10Pe_jv2w-LgML4di60qbyB5dtu6kZMQe",
+    "1UdCq04spTbWUSknwjH4W_ttemy7Bsyie",
+    "1kLKeLbsziGUThDr8L_dwFhxb_l9HZadA",
+    "1-MGTy3m-yx_DJL4xdO3s1wgqJ6TKwP0P",
+    "1FFY0zoykO5XW7qvIDbGskRuoEWrCQpdg",
+    "1DBMnHfSGg3YZ3wcfvfcsEwqZzvtgt8EB",
+    "1OlxWKVySjUNrav4ndfegolqjIpkBC2Pj",
+    "1J71uwbUda3Ze73mLlYh9bqtsSKcxUcAx",
+    "1YaNwdUIBKYuJ04ms3-gaeGr_xj-x7MLy"
+  ];
+
   let currentEpisode = parseInt(localStorage.getItem("lastEpisode")) || 0;
 
   function playEpisode(index) {
