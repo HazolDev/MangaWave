@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch Anime</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #0f0f0f);
+    color: #f0f0f0;
+  }
+
+  /* Top Bar */
+  .top-bar {
+    height: 60px;
+    background: linear-gradient(to right, #111, #0d0d0d);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-bottom: 1px solid #222;
+  }
+
+  .home-btn {
+    background: #ff69b4;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .home-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  .container {
+    display: flex;
+    height: calc(100vh - 60px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 280px;
+    background: #181818;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #222;
+  }
+
+  .sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #ff69b4;
+  }
+
+  .episode-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .episode-list li {
+    margin-bottom: 10px;
+  }
+
+  .episode-list li a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #ccc;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .episode-list li a:hover {
+    background: #2a2a2a;
+    color: white;
+  }
+
+  .episode-list li.active a {
+    background: #ff69b4;
+    color: black;
+    font-weight: 600;
+  }
+
+  /* Main */
+  .main {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .episode-title {
+    width: 100%;
+    max-width: 900px;
+    font-size: 1.6em;
+    margin-bottom: 5px;
+  }
+
+  .episode-desc {
+    width: 100%;
+    max-width: 900px;
+    color: #aaa;
+    margin-bottom: 15px;
+  }
+
+  /* 🎥 FIXED VIDEO SIZING */
+  .video-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    background: black;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+
+  .video-container iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .controls {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .controls button {
+    background: #ff69b4;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .controls button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+
+  /* 📱 Mobile */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+
+    .sidebar {
+      width: 100%;
+      padding: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-right: none;
+      border-bottom: 1px solid #222;
+    }
+
+    .sidebar h2 {
+      display: none;
+    }
+
+    .episode-list {
+      display: flex;
+      gap: 10px;
+    }
+
+    .episode-list li {
+      margin-bottom: 0;
+    }
+
+    .main {
+      padding: 16px;
+    }
+
+    .episode-title {
+      font-size: 1.3em;
+    }
+
+    .controls {
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="home-btn">⬅ Home</a>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <h2>Episodes</h2>
+    <ul class="episode-list">
+      <li><a onclick="playEpisode(0)">Full</a></li>
+        
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="episode-title" id="episodeTitle"></div>
+    <div class="episode-desc">Make sure to press, "Full" to get the video to play!</div>
+
+    <div class="video-container">
+      <iframe id="player" allowfullscreen></iframe>
+    </div>
+
+    <div class="controls">
+      <button onclick="nextEpisode()">Next Episode ▶</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ✅ EASY PASTE LINKS
+  const episodes = [
+    //   Your name
+    "soon", //1
+  ];
+
+  let currentEpisode = parseInt(localStorage.getItem("lastEpisode")) || 0;
+
+  function playEpisode(index) {
+    currentEpisode = index;
+    localStorage.setItem("lastEpisode", index);
+
+    document.getElementById("player").src =
+      `https://drive.google.com/file/d/${episodes[index]}/preview`;
+
+    document.getElementById("episodeTitle").textContent =
+      `Episode ${index + 1}`;
+
+    document.querySelectorAll(".episode-list li")
+      .forEach((li, i) => li.classList.toggle("active", i === index));
+  }
+
+  function nextEpisode() {
+    if (currentEpisode < episodes.length - 1) {
+      playEpisode(currentEpisode + 1);
+    }
+  }
+
+  playEpisode(currentEpisode);
+</script>
+
+</body>
+</html>
