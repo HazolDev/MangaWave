@@ -202,17 +202,7 @@
     <h2>Episodes</h2>
     <ul class="episode-list">
       <li><a onclick="playEpisode(0)">Ep 1</a></li>
-      <li><a onclick="playEpisode(1)">Ep 2</a></li>
-      <li><a onclick="playEpisode(2)">Ep 3</a></li>
-      <li><a onclick="playEpisode(3)">Ep 4</a></li>
-      <li><a onclick="playEpisode(4)">Ep 5</a></li>
-      <li><a onclick="playEpisode(5)">Ep 6</a></li>
-      <li><a onclick="playEpisode(6)">Ep 7</a></li>
-      <li><a onclick="playEpisode(7)">Ep 8</a></li>
-      <li><a onclick="playEpisode(8)">Ep 9</a></li>
-      <li><a onclick="playEpisode(9)">Ep 10</a></li>
-      <li><a onclick="playEpisode(10)">Ep 11</a></li>
-      <li><a onclick="playEpisode(11)">Ep 12</a></li>
+   
     </ul>
   </div>
 
@@ -232,10 +222,10 @@
 </div>
 
 <script>
-  // You and I are polar opposites
+  // ✅ Paste the normal Megaplay URLs here (no need for iframe src)
+  const episodes = [
     "https://megacloud.bloggy.click/stream/s-3/162561/dub", // Ep 1
-  
-  ];
+    ];
 
   // ✅ Auto-convert normal page URLs to embeddable URLs
   function getEmbedURL(url) {
